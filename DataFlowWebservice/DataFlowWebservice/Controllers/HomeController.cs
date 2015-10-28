@@ -10,7 +10,7 @@ namespace DataFlowWebservice.Controllers
     {
         public ActionResult Index()
         {
-            ViewBag.Title = "Home Page";
+            ViewBag.Title = "Dataflow Webservice";
 
             return View();
         }
