@@ -1,4 +1,5 @@
 ﻿using DataFlowWebservice.Models;
+using MongoDB.Bson;
 using MongoDB.Driver;
 using MongoDB.Driver.Builders;
 using System;
@@ -31,22 +32,26 @@ namespace DataFlowWebservice.Controllers
             //database = client.GetDatabase("Dataflow");
         }
         // GET: api/Connections
-        public IEnumerable<Connection> Get()
+        public ResponseModel Get()
         {
-            MongoCursor<Connection> cursor = database.GetCollection<Connection>("connections").FindAll();
-            return cursor.ToList();
+            MongoCursor<IResponseModel> cursor = database.GetCollection<IResponseModel>("connections").FindAll();
+            return new ResponseModel(cursor.ToList(), ResponseModel.RESPONSE_GET);
         }
 
         // GET: api/Connections/5
-        public IEnumerable<Connection> Get(int id)
+        public ResponseModel Get(int id)
         {
             IMongoQuery query = Query<Connection>.EQ(m => m.unitId, id); // Gebruikt connection (c), van c check hij of het unitId en het opgegeven id hetzelfde zijn (EQ)
-            return database.GetCollection<Connection>("connections").Find(query);
+            return new ResponseModel(database.GetCollection<IResponseModel>("connections").Find(query).ToList(), ResponseModel.RESPONSE_GET);
         }
 
         // POST: api/Connections
-        public void Post([FromBody]string value)
+        public ResponseModel Post([FromBody]Connection document)
         {
+            var collection = database.GetCollection<BsonDocument>("connections");
+            collection.Insert(document);
+
+            return new ResponseModel(new List<IResponseModel>() { document }, ResponseModel.RESPONSE_POST);
         }
 
         // PUT: api/Connections/5

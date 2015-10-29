@@ -1,4 +1,5 @@
 ﻿using DataFlowWebservice.Models;
+using MongoDB.Bson;
 using MongoDB.Driver;
 using MongoDB.Driver.Builders;
 using System;
@@ -31,22 +32,26 @@ namespace DataFlowWebservice.Controllers
             //database = client.GetDatabase("Dataflow");
         }
         // GET: api/Monitorings
-        public IEnumerable<Monitoring> Get()
+        public ResponseModel Get()
         {
-            MongoCursor<Monitoring> cursor = database.GetCollection<Monitoring>("monitorings").FindAll();
-            return cursor.ToList();
+            MongoCursor<IResponseModel> cursor = database.GetCollection<IResponseModel>("monitorings").FindAll();
+            return new ResponseModel(cursor.ToList(), ResponseModel.RESPONSE_GET);
         }
 
         // GET: api/Monitorings/5
-        public IEnumerable<Monitoring> Get(int id)
+        public ResponseModel Get(int id)
         {
             IMongoQuery query = Query<Monitoring>.EQ(m => m.unitId, id); // Gebruikt monitoring (m), van m check hij of het unitId en het opgegeven id hetzelfde zijn (EQ)
-            return database.GetCollection<Monitoring>("monitorings").Find(query);
+            return new ResponseModel(database.GetCollection<IResponseModel>("monitorings").Find(query).ToList(), ResponseModel.RESPONSE_GET);
         }
 
         // POST: api/Monitorings
-        public void Post([FromBody]string value)
+        public ResponseModel Post([FromBody]Monitoring document)
         {
+            var collection = database.GetCollection<BsonDocument>("monitorings");
+            collection.Insert(document);
+
+            return new ResponseModel(new List<IResponseModel>() { document }, ResponseModel.RESPONSE_POST);
         }
 
         // PUT: api/Monitorings/5

@@ -183,8 +183,10 @@
     </Compile>
     <Compile Include="Models\Connection.cs" />
     <Compile Include="Models\Event.cs" />
+    <Compile Include="Models\IResponseModel.cs" />
     <Compile Include="Models\Monitoring.cs" />
     <Compile Include="Models\Position.cs" />
+    <Compile Include="Models\ResponseModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

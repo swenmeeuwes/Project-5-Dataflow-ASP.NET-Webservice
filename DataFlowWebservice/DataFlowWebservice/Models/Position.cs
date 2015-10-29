@@ -7,7 +7,7 @@ using System.Web;
 
 namespace DataFlowWebservice.Models
 {
-    public class Position
+    public class Position : IResponseModel
     {
         public ObjectId _id { get; set; }
         public int unitId { get; set; }
@@ -15,8 +15,8 @@ namespace DataFlowWebservice.Models
         public string time { get; set; }
         public float rdX { get; set; }
         public float rdY { get; set; }
-        public float latitude { get; set; }
-        public float longitude { get; set; }
+        public float latitudeGps { get; set; }
+        public float longitudeGps { get; set; }
         public int speed { get; set; }
         public int course { get; set; }
         public int numSatellite { get; set; }

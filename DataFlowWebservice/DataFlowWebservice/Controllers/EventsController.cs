@@ -32,24 +32,26 @@ namespace DataFlowWebservice.Controllers
             //database = client.GetDatabase("Dataflow");
         }
         // GET: api/Events
-        public IEnumerable<Event> Get()
+        public ResponseModel Get()
         {
             MongoCursor<Event> cursor = database.GetCollection<Event>("events").FindAll();
-            return cursor.ToList();
+            return new ResponseModel(cursor.ToList<IResponseModel>(), ResponseModel.RESPONSE_GET);
         }
 
         // GET: api/Events/5
-        public IEnumerable<Event> Get(int id)
+        public ResponseModel Get(int id)
         {
             IMongoQuery query = Query<Event>.EQ(e => e.unitId, id); // Gebruikt event (e), van e check hij of het unitId en het opgegeven id hetzelfde zijn (EQ)
-            return database.GetCollection<Event>("events").Find(query);
+            return new ResponseModel(database.GetCollection<IResponseModel>("events").Find(query).ToList(), ResponseModel.RESPONSE_GET);
         }
 
         // POST: api/Events
-        public void Post([FromBody]Event document)
+        public ResponseModel Post([FromBody]Event document)
         {
             var collection = database.GetCollection<BsonDocument>("events");
             collection.Insert(document);
+
+            return new ResponseModel(new List<IResponseModel>() { document }, ResponseModel.RESPONSE_POST);
         }
 
         // PUT: api/Events/5

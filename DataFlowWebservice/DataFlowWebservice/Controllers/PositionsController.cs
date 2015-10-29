@@ -33,43 +33,26 @@ namespace DataFlowWebservice.Controllers
             //database = client.GetDatabase("Dataflow");
         }
         // GET: api/Positions
-        public IEnumerable<Position> Get()
+        public ResponseModel Get()
         {
-            MongoCursor<Position> cursor = database.GetCollection<Position>("positions").FindAll();
-            return cursor.ToList();
+            MongoCursor<IResponseModel> cursor = database.GetCollection<IResponseModel>("positions").FindAll();
+            return new ResponseModel(cursor.ToList(), ResponseModel.RESPONSE_GET);
         }
 
         // GET: api/Positions/5
-        public IEnumerable<Position> Get(int id)
+        public ResponseModel Get(int id)
         {
             IMongoQuery query = Query<Position>.EQ(p => p.unitId, id); // Gebruikt position (p), van p check hij of het unitId en het opgegeven id hetzelfde zijn (EQ)
-            return database.GetCollection<Position>("positions").Find(query);
+            return new ResponseModel(database.GetCollection<IResponseModel>("positions").Find(query).ToList(), ResponseModel.RESPONSE_GET);
         }
 
         // POST: api/Positions
-        public void Post([FromBody]Position document)
+        public ResponseModel Post([FromBody]Position document)
         {
-            //var document = new BsonDocument();
-            //document["unitId"] = 100;
-
-            //var document = new BsonDocument
-            //{
-            //    { "unitId" , 100},
-            //    { "date", "10-3-2015"},
-            //    { "time", "00:00:02"},
-            //    { "rdX", 100 },
-            //    { "rdY", 101 },
-            //    { "latitude", 200 },
-            //    { "longitude", 201 },
-            //    { "speed", 19 },
-            //    { "course", 360 },
-            //    { "numSatellite", 2 },
-            //    { "hdop", 10 },
-            //    { "dopType", "Type1" }
-            //};
-
             var collection = database.GetCollection<BsonDocument>("positions");
             collection.Insert(document);
+
+            return new ResponseModel(new List<IResponseModel>() { document }, ResponseModel.RESPONSE_POST);
         }
 
         // PUT: api/Positions/5

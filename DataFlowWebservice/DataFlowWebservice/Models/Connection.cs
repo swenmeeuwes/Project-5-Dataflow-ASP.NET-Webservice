@@ -6,7 +6,7 @@ using System.Web;
 
 namespace DataFlowWebservice.Models
 {
-    public class Connection
+    public class Connection : IResponseModel
     {
         public ObjectId _id { get; set; }
         public int unitId { get; set; }
