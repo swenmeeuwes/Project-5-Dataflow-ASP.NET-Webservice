@@ -60,8 +60,13 @@ namespace DataFlowWebservice.Controllers
         }
 
         // DELETE: api/Monitorings/5
-        public void Delete(int id)
+        public ResponseModel Delete(int id)
         {
+            IMongoQuery query = Query<Monitoring>.EQ(m => m.unitId, id); // Gebruikt monitoring (m), van m check hij of het unitId en het opgegeven id hetzelfde zijn (EQ)
+            var collection = database.GetCollection<BsonDocument>("monitorings");
+            collection.Remove(query);
+
+            return new ResponseModel(new List<IResponseModel>(), ResponseModel.RESPONSE_DELETE);
         }
     }
 }

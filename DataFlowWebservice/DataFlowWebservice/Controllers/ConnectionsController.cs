@@ -11,6 +11,7 @@ using System.Web.Http;
 
 namespace DataFlowWebservice.Controllers
 {
+    [Obsolete]
     public class ConnectionsController : ApiController
     {
         private MongoDatabase database;
@@ -60,8 +61,13 @@ namespace DataFlowWebservice.Controllers
         }
 
         // DELETE: api/Connections/5
-        public void Delete(int id)
+        public ResponseModel Delete(int id)
         {
+            IMongoQuery query = Query<Connection>.EQ(c => c.unitId, id); // Gebruikt connection (c), van c check hij of het unitId en het opgegeven id hetzelfde zijn (EQ)
+            var collection = database.GetCollection<BsonDocument>("connections");
+            collection.Remove(query);
+
+            return new ResponseModel(new List<IResponseModel>(), ResponseModel.RESPONSE_DELETE);
         }
     }
 }

@@ -11,7 +11,7 @@ namespace DataFlowWebservice.Models
         public ObjectId _id { get; set; }
         public DateTime dateTime { get; set; }
         public int unitId { get; set; }
-        public int ignition { get; set; }
-        public int powerStatus { get; set; }
+        public string port { get; set; }
+        public int portValue { get; set; }
     }
 }
