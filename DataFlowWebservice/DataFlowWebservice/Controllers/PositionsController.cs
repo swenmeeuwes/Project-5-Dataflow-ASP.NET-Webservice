@@ -43,7 +43,7 @@ namespace DataFlowWebservice.Controllers
         public ResponseModel Get(int id)
         {
             IMongoQuery query = Query<Position>.EQ(p => p.unitId, id); // Gebruikt position (p), van p check hij of het unitId en het opgegeven id hetzelfde zijn (EQ)
-            return new ResponseModel(database.GetCollection<IResponseModel>("positions").Find(query).ToList(), ResponseModel.RESPONSE_GET);
+            return new ResponseModel(database.GetCollection<Position>("positions").Find(query).ToList<IResponseModel>(), ResponseModel.RESPONSE_GET);
         }
 
         // POST: api/Positions

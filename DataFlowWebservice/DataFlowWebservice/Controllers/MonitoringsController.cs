@@ -42,7 +42,7 @@ namespace DataFlowWebservice.Controllers
         public ResponseModel Get(int id)
         {
             IMongoQuery query = Query<Monitoring>.EQ(m => m.unitId, id); // Gebruikt monitoring (m), van m check hij of het unitId en het opgegeven id hetzelfde zijn (EQ)
-            return new ResponseModel(database.GetCollection<IResponseModel>("monitorings").Find(query).ToList(), ResponseModel.RESPONSE_GET);
+            return new ResponseModel(database.GetCollection<Monitoring>("monitorings").Find(query).ToList<IResponseModel>(), ResponseModel.RESPONSE_GET);
         }
 
         // POST: api/Monitorings

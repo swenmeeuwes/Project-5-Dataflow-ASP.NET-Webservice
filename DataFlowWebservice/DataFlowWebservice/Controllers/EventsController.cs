@@ -42,7 +42,7 @@ namespace DataFlowWebservice.Controllers
         public ResponseModel Get(int id)
         {
             IMongoQuery query = Query<Event>.EQ(e => e.unitId, id); // Gebruikt event (e), van e check hij of het unitId en het opgegeven id hetzelfde zijn (EQ)
-            return new ResponseModel(database.GetCollection<IResponseModel>("events").Find(query).ToList(), ResponseModel.RESPONSE_GET);
+            return new ResponseModel(database.GetCollection<Event>("events").Find(query).ToList<IResponseModel>(), ResponseModel.RESPONSE_GET);
         }
 
         // POST: api/Events
@@ -55,8 +55,9 @@ namespace DataFlowWebservice.Controllers
         }
 
         // PUT: api/Events/5
-        public void Put(int id, [FromBody]string value)
+        public ResponseModel Put(int id, [FromBody]Event document)
         {
+            
         }
 
         // DELETE: api/Events/5
