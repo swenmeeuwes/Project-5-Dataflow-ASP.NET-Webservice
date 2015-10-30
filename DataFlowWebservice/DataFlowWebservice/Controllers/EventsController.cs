@@ -55,7 +55,7 @@ namespace DataFlowWebservice.Controllers
         }
 
         // PUT: api/Events/5
-        public ResponseModel Put(int id, [FromBody]Event document)
+        public void Put(int id, [FromBody]Event document)
         {
             
         }
