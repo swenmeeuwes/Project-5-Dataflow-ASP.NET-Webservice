@@ -55,9 +55,14 @@ namespace DataFlowWebservice.Controllers
         }
 
         // PUT: api/Events/5
-        public void Put(int id, [FromBody]Event document)
+        public ResponseModel Put(int id, [FromBody]Event document)
         {
-            
+            IMongoQuery query = Query<Event>.EQ(e => e.unitId, id); // Gebruikt event (e), van e check hij of het unitId en het opgegeven id hetzelfde zijn (EQ)
+            var collection = database.GetCollection<BsonDocument>("events");
+            var update = Update.Replace(document);
+            collection.Update(query, update);
+
+            return new ResponseModel(new List<IResponseModel>(), ResponseModel.RESPONSE_PUT);
         }
 
         // DELETE: api/Events/5

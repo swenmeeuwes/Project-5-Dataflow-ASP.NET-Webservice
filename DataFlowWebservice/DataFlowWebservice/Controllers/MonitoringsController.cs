@@ -34,8 +34,8 @@ namespace DataFlowWebservice.Controllers
         // GET: api/Monitorings
         public ResponseModel Get()
         {
-            MongoCursor<IResponseModel> cursor = database.GetCollection<IResponseModel>("monitorings").FindAll();
-            return new ResponseModel(cursor.ToList(), ResponseModel.RESPONSE_GET);
+            MongoCursor<Monitoring> cursor = database.GetCollection<Monitoring>("monitorings").FindAll();
+            return new ResponseModel(cursor.ToList<IResponseModel>(), ResponseModel.RESPONSE_GET);
         }
 
         // GET: api/Monitorings/5
