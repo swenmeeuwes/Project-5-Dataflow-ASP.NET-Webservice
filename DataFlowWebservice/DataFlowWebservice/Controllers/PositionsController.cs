@@ -29,7 +29,7 @@ namespace DataFlowWebservice.Controllers
         }
 
         // GET: api/Positions/5
-        public ResponseModel Get(int id)
+        public ResponseModel Get(long id)
         {
             IMongoQuery query = Query<Position>.EQ(p => p.unitId, id); // Gebruikt position (p), van p check hij of het unitId en het opgegeven id hetzelfde zijn (EQ)
             return new ResponseModel(databaseManager.GetDatabase().GetCollection<Position>("positions").Find(query).ToList<IResponseModel>(), ResponseModel.RESPONSE_GET);
@@ -45,12 +45,12 @@ namespace DataFlowWebservice.Controllers
         }
 
         // PUT: api/Positions/5
-        public void Put(int id, [FromBody]string value)
+        public void Put(long id, [FromBody]string value)
         {
         }
 
         // DELETE: api/Positions/5
-        public ResponseModel Delete(int id)
+        public ResponseModel Delete(long id)
         {
             IMongoQuery query = Query<Position>.EQ(p => p.unitId, id); // Gebruikt position (p), van p check hij of het unitId en het opgegeven id hetzelfde zijn (EQ)
             var collection = databaseManager.GetDatabase().GetCollection<BsonDocument>("positions");

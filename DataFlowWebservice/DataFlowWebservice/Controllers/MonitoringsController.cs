@@ -28,7 +28,7 @@ namespace DataFlowWebservice.Controllers
         }
 
         // GET: api/Monitorings/5
-        public ResponseModel Get(int id)
+        public ResponseModel Get(long id)
         {
             IMongoQuery query = Query<Monitoring>.EQ(m => m.unitId, id); // Gebruikt monitoring (m), van m check hij of het unitId en het opgegeven id hetzelfde zijn (EQ)
             return new ResponseModel(databaseManager.GetDatabase().GetCollection<Monitoring>("monitorings").Find(query).ToList<IResponseModel>(), ResponseModel.RESPONSE_GET);
@@ -44,12 +44,12 @@ namespace DataFlowWebservice.Controllers
         }
 
         // PUT: api/Monitorings/5
-        public void Put(int id, [FromBody]string value)
+        public void Put(long id, [FromBody]string value)
         {
         }
 
         // DELETE: api/Monitorings/5
-        public ResponseModel Delete(int id)
+        public ResponseModel Delete(long id)
         {
             IMongoQuery query = Query<Monitoring>.EQ(m => m.unitId, id); // Gebruikt monitoring (m), van m check hij of het unitId en het opgegeven id hetzelfde zijn (EQ)
             var collection = databaseManager.GetDatabase().GetCollection<BsonDocument>("monitorings");
