@@ -10,7 +10,7 @@ namespace DataFlowWebservice.Models
     public class Position : IResponseModel
     {
         public ObjectId _id { get; set; }
-        public int unitId { get; set; }
+        public long unitId { get; set; }
         public DateTime dateTime { get; set; }
         public float rdX { get; set; }
         public float rdY { get; set; }
