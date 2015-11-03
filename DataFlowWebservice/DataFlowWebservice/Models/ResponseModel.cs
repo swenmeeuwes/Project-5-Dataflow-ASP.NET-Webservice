@@ -23,6 +23,11 @@ namespace DataFlowWebservice.Models
             this.data = data;
             size = data.Count;
             this.requestType = requestType;
+
+            if(size == 0)
+            {
+                statusCode = 204;
+            }
         }
     }
 }
