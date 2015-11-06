@@ -12,7 +12,6 @@ namespace DataFlowWebservice.Models
         public static string RESPONSE_PUT = "PUT";
         public static string RESPONSE_DELETE = "DELETE";
 
-        public bool succes = true;
         public int statusCode = 200;
         public string requestType { get; set; }
         public int size { get; set; }
