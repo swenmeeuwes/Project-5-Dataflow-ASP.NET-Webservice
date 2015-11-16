@@ -5,6 +5,7 @@ using System.Web;
 
 namespace DataFlowWebservice.Models
 {
+    [Obsolete]
     public class ResponseModel
     {
         public static string RESPONSE_GET = "GET";

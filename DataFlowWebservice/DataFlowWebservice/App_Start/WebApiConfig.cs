@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DataFlowWebservice.Controllers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http.Headers;
@@ -12,6 +13,7 @@ namespace DataFlowWebservice
         {
             // Web API configuration and services
             config.Formatters.JsonFormatter.SupportedMediaTypes.Add(new MediaTypeHeaderValue("text/html"));
+            config.MessageHandlers.Add(new WrappingHandler());
 
             // Web API routes
             config.MapHttpAttributeRoutes();

@@ -21,47 +21,46 @@ namespace DataFlowWebservice.Controllers
             databaseManager = new DatabaseManager();
         }
         // GET: api/Events
-        public ResponseModel Get()
+        public IEnumerable<Event> Get()
         {
-            MongoCursor<Event> cursor = databaseManager.GetDatabase().GetCollection<Event>("events").FindAll();
-            return new ResponseModel(cursor.ToList<IResponseModel>(), ResponseModel.RESPONSE_GET);
+            return databaseManager.GetDatabase().GetCollection<Event>("events").FindAll();
         }
 
         // GET: api/Events/5
-        public ResponseModel Get(long id)
+        public IEnumerable<Event> Get(long id)
         {
             IMongoQuery query = Query<Event>.EQ(e => e.unitId, id); // Gebruikt event (e), van e check hij of het unitId en het opgegeven id hetzelfde zijn (EQ)
-            return new ResponseModel(databaseManager.GetDatabase().GetCollection<Event>("events").Find(query).ToList<IResponseModel>(), ResponseModel.RESPONSE_GET);
+            return databaseManager.GetDatabase().GetCollection<Event>("events").Find(query);
         }
 
         // POST: api/Events
-        public ResponseModel Post([FromBody]Event document)
+        public void Post([FromBody]Event document)
         {
             var collection = databaseManager.GetDatabase().GetCollection<BsonDocument>("events");
             collection.Insert(document);
 
-            return new ResponseModel(new List<IResponseModel>() { document }, ResponseModel.RESPONSE_POST);
+            //return new ResponseModel(new List<IResponseModel>() { document }, ResponseModel.RESPONSE_POST);
         }
 
         // PUT: api/Events/5
-        public ResponseModel Put(long id, [FromBody]Event document)
+        public void Put(long id, [FromBody]Event document)
         {
             IMongoQuery query = Query<Event>.EQ(e => e.unitId, id); // Gebruikt event (e), van e check hij of het unitId en het opgegeven id hetzelfde zijn (EQ)
             var collection = databaseManager.GetDatabase().GetCollection<BsonDocument>("events");
             var update = Update.Replace(document);
             collection.Update(query, update);
 
-            return new ResponseModel(new List<IResponseModel>(), ResponseModel.RESPONSE_PUT);
+            //return new ResponseModel(new List<IResponseModel>(), ResponseModel.RESPONSE_PUT);
         }
 
         // DELETE: api/Events/5
-        public ResponseModel Delete(long id)
+        public void Delete(long id)
         {
             IMongoQuery query = Query<Event>.EQ(e => e.unitId, id); // Gebruikt event (e), van e check hij of het unitId en het opgegeven id hetzelfde zijn (EQ)
             var collection = databaseManager.GetDatabase().GetCollection<BsonDocument>("events");
             collection.Remove(query);
 
-            return new ResponseModel(new List<IResponseModel>() , ResponseModel.RESPONSE_DELETE);
+            //return new ResponseModel(new List<IResponseModel>() , ResponseModel.RESPONSE_DELETE);
         }
     }
 }

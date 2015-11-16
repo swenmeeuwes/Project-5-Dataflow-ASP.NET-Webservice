@@ -21,26 +21,25 @@ namespace DataFlowWebservice.Controllers
             databaseManager = new DatabaseManager();
         }
         // GET: api/Monitorings
-        public ResponseModel Get()
+        public IEnumerable<Monitoring> Get()
         {
-            MongoCursor<Monitoring> cursor = databaseManager.GetDatabase().GetCollection<Monitoring>("monitorings").FindAll();
-            return new ResponseModel(cursor.ToList<IResponseModel>(), ResponseModel.RESPONSE_GET);
+            return databaseManager.GetDatabase().GetCollection<Monitoring>("monitorings").FindAll();
         }
 
         // GET: api/Monitorings/5
-        public ResponseModel Get(long id)
+        public IEnumerable<Monitoring> Get(long id)
         {
             IMongoQuery query = Query<Monitoring>.EQ(m => m.unitId, id); // Gebruikt monitoring (m), van m check hij of het unitId en het opgegeven id hetzelfde zijn (EQ)
-            return new ResponseModel(databaseManager.GetDatabase().GetCollection<Monitoring>("monitorings").Find(query).ToList<IResponseModel>(), ResponseModel.RESPONSE_GET);
+            return databaseManager.GetDatabase().GetCollection<Monitoring>("monitorings").Find(query);
         }
 
         // POST: api/Monitorings
-        public ResponseModel Post([FromBody]Monitoring document)
+        public void Post([FromBody]Monitoring document)
         {
             var collection = databaseManager.GetDatabase().GetCollection<BsonDocument>("monitorings");
             collection.Insert(document);
 
-            return new ResponseModel(new List<IResponseModel>() { document }, ResponseModel.RESPONSE_POST);
+            //return new ResponseModel(new List<IResponseModel>() { document }, ResponseModel.RESPONSE_POST);
         }
 
         // PUT: api/Monitorings/5
@@ -49,13 +48,13 @@ namespace DataFlowWebservice.Controllers
         }
 
         // DELETE: api/Monitorings/5
-        public ResponseModel Delete(long id)
+        public void Delete(long id)
         {
             IMongoQuery query = Query<Monitoring>.EQ(m => m.unitId, id); // Gebruikt monitoring (m), van m check hij of het unitId en het opgegeven id hetzelfde zijn (EQ)
             var collection = databaseManager.GetDatabase().GetCollection<BsonDocument>("monitorings");
             collection.Remove(query);
 
-            return new ResponseModel(new List<IResponseModel>(), ResponseModel.RESPONSE_DELETE);
+            //return new ResponseModel(new List<IResponseModel>(), ResponseModel.RESPONSE_DELETE);
         }
     }
 }
