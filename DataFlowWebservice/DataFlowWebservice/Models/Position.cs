@@ -1,4 +1,5 @@
 ﻿using MongoDB.Bson;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,7 @@ namespace DataFlowWebservice.Models
 {
     public class Position
     {
+        [JsonIgnore]
         public ObjectId _id { get; set; }
         public long unitId { get; set; }
         public DateTime dateTime { get; set; }
