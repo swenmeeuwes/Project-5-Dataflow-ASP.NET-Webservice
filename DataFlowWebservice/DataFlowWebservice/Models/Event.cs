@@ -9,6 +9,7 @@ namespace DataFlowWebservice.Models
 {
     public class Event
     {
+        [JsonIgnore]
         public ObjectId _id { get; set; }
         public DateTime dateTime { get; set; }
         public long unitId { get; set; }
