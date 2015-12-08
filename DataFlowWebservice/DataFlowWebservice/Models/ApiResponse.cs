@@ -12,8 +12,6 @@ namespace DataFlowWebservice.Controllers
     {
         [DataMember]
         public int statusCode { get; set; }
-        //[DataMember(EmitDefaultValue = false)]
-        //public int size { get; set; }
 
         [DataMember(EmitDefaultValue = false)]
         public string errorMessage { get; set; }

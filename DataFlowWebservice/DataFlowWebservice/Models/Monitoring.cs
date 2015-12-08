@@ -6,7 +6,7 @@ using System.Web;
 
 namespace DataFlowWebservice.Models
 {
-    public class Monitoring : IResponseModel
+    public class Monitoring
     {
         public ObjectId _id { get; set; }
         public long unitId { get; set; }

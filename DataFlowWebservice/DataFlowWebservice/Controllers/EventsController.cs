@@ -38,8 +38,6 @@ namespace DataFlowWebservice.Controllers
         {
             var collection = databaseManager.GetDatabase().GetCollection<BsonDocument>("events");
             collection.Insert(document);
-
-            //return new ResponseModel(new List<IResponseModel>() { document }, ResponseModel.RESPONSE_POST);
         }
 
         // PUT: api/Events/5
@@ -49,8 +47,6 @@ namespace DataFlowWebservice.Controllers
             var collection = databaseManager.GetDatabase().GetCollection<BsonDocument>("events");
             var update = Update.Replace(document);
             collection.Update(query, update);
-
-            //return new ResponseModel(new List<IResponseModel>(), ResponseModel.RESPONSE_PUT);
         }
 
         // DELETE: api/Events/5
@@ -59,8 +55,6 @@ namespace DataFlowWebservice.Controllers
             IMongoQuery query = Query<Event>.EQ(e => e.unitId, id); // Gebruikt event (e), van e check hij of het unitId en het opgegeven id hetzelfde zijn (EQ)
             var collection = databaseManager.GetDatabase().GetCollection<BsonDocument>("events");
             collection.Remove(query);
-
-            //return new ResponseModel(new List<IResponseModel>() , ResponseModel.RESPONSE_DELETE);
         }
     }
 }

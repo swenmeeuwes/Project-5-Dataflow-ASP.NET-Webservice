@@ -7,7 +7,7 @@ using System.Web;
 
 namespace DataFlowWebservice.Models
 {
-    public class Position : IResponseModel
+    public class Position
     {
         public ObjectId _id { get; set; }
         public long unitId { get; set; }

@@ -1,4 +1,5 @@
 ﻿using MongoDB.Bson;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,7 +7,7 @@ using System.Web;
 
 namespace DataFlowWebservice.Models
 {
-    public class Event : IResponseModel
+    public class Event
     {
         public ObjectId _id { get; set; }
         public DateTime dateTime { get; set; }

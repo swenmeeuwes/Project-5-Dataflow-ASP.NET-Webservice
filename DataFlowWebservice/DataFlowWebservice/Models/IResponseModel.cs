@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace DataFlowWebservice.Models
 {
+    [Obsolete]
     public interface IResponseModel
     {
     }
