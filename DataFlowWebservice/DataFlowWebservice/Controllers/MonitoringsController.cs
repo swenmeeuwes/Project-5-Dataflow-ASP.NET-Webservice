@@ -34,10 +34,13 @@ namespace DataFlowWebservice.Controllers
         }
 
         // POST: api/Monitorings
-        public void Post([FromBody]Monitoring document)
+        public void Post([FromBody]Monitoring[] document)
         {
             var collection = databaseManager.GetDatabase().GetCollection<BsonDocument>("monitorings");
-            collection.Insert(document);
+            foreach (var item in document)
+            {
+                collection.Insert(item);
+            }
         }
         // DELETE: api/Monitorings/5
         public void Delete(long id)

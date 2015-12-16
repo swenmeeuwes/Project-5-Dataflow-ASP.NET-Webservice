@@ -35,10 +35,13 @@ namespace DataFlowWebservice.Controllers
         }
 
         // POST: api/Positions
-        public void Post([FromBody]Position document)
+        public void Post([FromBody]Position[] document)
         {
             var collection = databaseManager.GetDatabase().GetCollection<BsonDocument>("positions");
-            collection.Insert(document);
+            foreach (var item in document)
+            {
+                collection.Insert(item);
+            }
         }
 
         // DELETE: api/Positions/5
