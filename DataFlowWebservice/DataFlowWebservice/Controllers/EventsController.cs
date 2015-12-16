@@ -34,13 +34,10 @@ namespace DataFlowWebservice.Controllers
         }
 
         // POST: api/Events
-        public void Post([FromBody]Event[] document)
+        public void Post([FromBody]Event document)
         {
             var collection = databaseManager.GetDatabase().GetCollection<BsonDocument>("events");
-            foreach (var item in document)
-            {
-                collection.Insert(item);
-            }
+            collection.Insert(document);
         }
 
         // PUT: api/Events/5
