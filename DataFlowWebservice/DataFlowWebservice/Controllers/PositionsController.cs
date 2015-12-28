@@ -34,6 +34,19 @@ namespace DataFlowWebservice.Controllers
             return databaseManager.GetDatabase().GetCollection<Position>("positions").Find(query);
         }
 
+        public IEnumerable<Position> Get(string beginDate, string endDate)
+        {
+            string[] beginDateSplitted = beginDate.Split('-');
+            string[] endDateSplitted = endDate.Split('-');
+
+            DateTime begin = new DateTime(Convert.ToInt32(beginDateSplitted[0]), Convert.ToInt32(beginDateSplitted[1]), Convert.ToInt32(beginDateSplitted[2]));
+            DateTime end = new DateTime(Convert.ToInt32(endDateSplitted[0]), Convert.ToInt32(endDateSplitted[1]), Convert.ToInt32(endDateSplitted[2]));
+
+            IMongoQuery query = Query<Position>.Where(m => m.dateTime >= begin && m.dateTime <= end); // Gebruikt position (p), van p check hij of het unitId en het opgegeven id hetzelfde zijn (EQ)
+            return databaseManager.GetDatabase().GetCollection<Position>("positions").Find(query);
+        }
+
+
         // POST: api/Positions
         public void Post([FromBody]Position document)
         {

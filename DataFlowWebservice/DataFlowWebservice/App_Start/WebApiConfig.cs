@@ -19,6 +19,12 @@ namespace DataFlowWebservice
             config.MapHttpAttributeRoutes();
 
             config.Routes.MapHttpRoute(
+                name: "IntervalDateTime",
+                routeTemplate: "api/{controller}/{beginDate}/{endDate}",
+                defaults: new { beginDate = RouteParameter.Optional, endDate = RouteParameter.Optional }
+            );
+
+            config.Routes.MapHttpRoute(
                 name: "DefaultApi",
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
