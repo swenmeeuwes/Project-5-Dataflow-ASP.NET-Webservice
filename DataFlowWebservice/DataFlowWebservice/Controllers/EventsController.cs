@@ -33,6 +33,18 @@ namespace DataFlowWebservice.Controllers
             return databaseManager.GetDatabase().GetCollection<Event>("events").Find(query);
         }
 
+        public IEnumerable<Event> Get(string beginDate, string endDate)
+        {
+            string[] beginDateSplitted = beginDate.Split('-');
+            string[] endDateSplitted = endDate.Split('-');
+
+            DateTime begin = new DateTime(Convert.ToInt32(beginDateSplitted[0]), Convert.ToInt32(beginDateSplitted[1]), Convert.ToInt32(beginDateSplitted[2]));
+            DateTime end = new DateTime(Convert.ToInt32(endDateSplitted[0]), Convert.ToInt32(endDateSplitted[1]), Convert.ToInt32(endDateSplitted[2]));
+
+            IMongoQuery query = Query<Event>.Where(m => m.dateTime >= begin && m.dateTime <= end); // Gebruikt event (e), van e check hij of het unitId en het opgegeven id hetzelfde zijn (EQ)
+            return databaseManager.GetDatabase().GetCollection<Event>("events").Find(query);
+        }
+
         // POST: api/Events
         public void Post([FromBody]Event document)
         {

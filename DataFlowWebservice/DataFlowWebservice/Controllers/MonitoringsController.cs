@@ -33,6 +33,18 @@ namespace DataFlowWebservice.Controllers
             return databaseManager.GetDatabase().GetCollection<Monitoring>("monitorings").Find(query);
         }
 
+        public IEnumerable<Monitoring> Get(string beginDate, string endDate)
+        {
+            string[] beginDateSplitted = beginDate.Split('-');
+            string[] endDateSplitted = endDate.Split('-');
+
+            DateTime begin = new DateTime(Convert.ToInt32(beginDateSplitted[0]), Convert.ToInt32(beginDateSplitted[1]), Convert.ToInt32(beginDateSplitted[2]));
+            DateTime end = new DateTime(Convert.ToInt32(endDateSplitted[0]), Convert.ToInt32(endDateSplitted[1]), Convert.ToInt32(endDateSplitted[2]));
+
+            IMongoQuery query = Query<Monitoring>.Where(m => m.beginTime >= begin && m.endTime <= end); // Gebruikt monitoring (m), van m check hij of het unitId en het opgegeven id hetzelfde zijn (EQ)
+            return databaseManager.GetDatabase().GetCollection<Monitoring>("monitorings").Find(query);
+        }
+
         // POST: api/Monitorings
         public void Post([FromBody]Monitoring document)
         {
